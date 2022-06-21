@@ -34,6 +34,7 @@ public class Calculator {
 				faktoriyel();
 				break;
 			case 6:
+				usBulma();
 				break;
 			case 7:
 				asalMi();
@@ -197,5 +198,73 @@ public class Calculator {
 		else
 			System.out.println(numOne + " sayýsý asal sayý deðildir.");
 		System.out.println("*******************");
+	}
+
+	public static void usBulma() {
+		Scanner scanner = new Scanner(System.in);
+		int counter = 1;
+		int k = 0;
+		int num = 0;
+		int numTemp = 0;
+		boolean check = true;
+		int[] divider = { 0 };
+		int[] pow = { 0 };
+		int[] dividerCheck = { 0 };
+		while (check) {
+			System.out.print("\nSayý Girin: ");
+			num = scanner.nextInt();
+			scanner.nextLine();
+			if (1 < num)
+				check = false;
+			else
+				System.out.println("Hatalý deðer girdiniz!");
+		}
+		numTemp = num;
+		for (int i = 2; i <= num; i++) {
+			if (num % i == 0) {
+				if (dividerCheck[k] == 0) {
+					divider[k] = i;
+					pow[k] = counter;
+					dividerCheck[k] = 1;
+					num /= i;
+					counter++;
+
+				} else {
+					num /= i;
+					pow[k] = counter;
+					counter++;
+				}
+
+				i--;
+			} else {
+				counter = 1;
+				if (dividerCheck[k] != 0) {
+					k++;
+					divider = arrayExpand(divider, 0);
+					pow = arrayExpand(pow, 0);
+					dividerCheck = arrayExpand(dividerCheck, 0);
+				}
+			}
+
+		}
+		System.out.println("*******************");
+		System.out.print(numTemp + " = ");
+		if (k > 1) {
+			for (int i = 0; i < k; i++) {
+				System.out.print(divider[i] + "^" + pow[i] + " * ");
+			}
+			System.out.println(divider[k] + "^" + pow[k]);
+		} else
+			System.out.println(divider[k] + "^" + pow[k]);
+		System.out.println("*******************");
+	}
+
+	public static int[] arrayExpand(int[] arrayOld, int value) {
+		int[] arrayNew = new int[arrayOld.length + 1];
+		for (int i = 0; i < arrayOld.length; i++) {
+			arrayNew[i] = arrayOld[i];
+		}
+		arrayNew[arrayOld.length] = value;
+		return arrayNew;
 	}
 }
